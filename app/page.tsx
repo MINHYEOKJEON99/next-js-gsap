@@ -4,7 +4,7 @@ export default function Home() {
       <section className="one">
         <div className="container">
           <div className="col">
-            <h1 className="text-[26px] font-bold">Entry Point</h1>
+            <h1 className="text-[32px] font-bold">Entry Point</h1>
           </div>
           <div className="col">
             <p>
@@ -23,7 +23,7 @@ export default function Home() {
             </div>
           </div>
           <div className="col">
-            <h1 className="text-[26px] font-bold">Gesture</h1>
+            <h1 className="text-[32px] font-bold">Gesture</h1>
             <p>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est laborum dolorum cumque inventore, rerum
               harum enim tempore totam doloremque provident neque molestiae impedit, dolorem amet numquam repudiandae
@@ -35,7 +35,7 @@ export default function Home() {
       <section className="three">
         <div className="container">
           <div className="col">
-            <h1 className="text-[26px] font-bold">Variation</h1>
+            <h1 className="text-[32px] font-bold">Variation</h1>
             <p>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est laborum dolorum cumque inventore, rerum
               harum enim tempore totam doloremque provident neque molestiae impedit, dolorem amet numquam repudiandae
@@ -52,7 +52,7 @@ export default function Home() {
           <div className="img">
             <img src="/img3.jpg" alt="gesture" />
           </div>
-          <h1 className="text-[26px] font-bold">The Stance</h1>
+          <h1 className="text-[32px] font-bold">The Stance</h1>
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est laborum dolorum cumque inventore, rerum harum
             enim tempore totam doloremque provident neque molestiae impedit, dolorem amet numquam repudiandae vel modi
@@ -68,7 +68,7 @@ export default function Home() {
       <section className="five">
         <div className="container">
           <div className="col">
-            <h1 className="text-[26px] font-bold">Stillness</h1>
+            <h1 className="text-[32px] font-bold">Stillness</h1>
           </div>
           <div className="col">
             <p>
@@ -82,7 +82,7 @@ export default function Home() {
       <section className="six">
         <div className="container">
           <div className="col">
-            <h1 className="text-[26px] font-bold">Release</h1>
+            <h1 className="text-[32px] font-bold">Release</h1>
           </div>
           <div className="col">
             <p>
