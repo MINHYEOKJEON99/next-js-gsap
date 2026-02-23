@@ -1,3 +1,5 @@
+@import url("https://fonts.cdnfonts.com/css/newsflash-bb");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -29,8 +31,180 @@
   }
 }
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: "Newsflash BB", var(--font-dm-sans), sans-serif;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+h1 {
+  text-transform: uppercase;
+  font-family: "Newsflash BB", sans-serif;
+  font-size: clamp(3rem, 10vw, 15rem);
+  font-weight: 500;
+  letter-spacing: -0.025rem;
+  line-height: 1;
+}
+
+p {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: -0.025rem;
+  line-height: 1.25;
+}
+
+section {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+/* 새로 콘텐츠가 더 많은 섹션을 만들 수 있고 나중에 긴 섹션에서 핀 기능이 어떻게 작용하는지 보여줌 */
+section.four {
+  height: 200svh;
+}
+/*
+플렉스 레이아웃을 사용
+초기회전 적용
+기준점은 왼쪽 아래
+회전이 고정된 상태로 시작
+스크롤 트리거를 사용하여 부드럽게 제자리로 되돌릴 수 있음
+스크롤시 회전 애니메이션이 적용되 변환 최적화도 활성화
+*/
+
+.container {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  transform: rotate(30deg);
+  transform-origin: bottom left;
+  will-change: transform;
+}
+
+.one .container {
+  background-color: var(--base-100);
+  color: #000;
+}
+
+.two .container {
+  background-color: var(--base-200);
+  color: #fff;
+}
+
+.three .container {
+  background-color: var(--base-300);
+  color: #000;
+}
+.four .container {
+  background-color: var(--base-400);
+  color: #000;
+}
+.five .container {
+  background-color: var(--base-500);
+  color: #fff;
+}
+.six .container {
+  background-color: var(--base-600);
+  color: #000;
+}
+
+.container .col {
+  display: flex;
+  flex: 1;
+}
+
+.container .col .img {
+  width: 35%;
+  height: auto;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.one .container .col:nth-child(2),
+.five .container .col:nth-child(2),
+.six .container .col:nth-child(2) {
+  align-items: flex-end;
+}
+
+.two .container .col:nth-child(1),
+.three .container .col:nth-child(2) {
+  justify-content: center;
+  align-items: center;
+}
+
+.two .container .col:nth-child(2),
+.three .container .col:nth-child(1) {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.four .container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.four .img {
+  width: 40%;
+  margin-bottom: 4rem;
+}
+
+.four p {
+  width: 50%;
+}
+
+footer {
+  position: relative;
+  width: 100%;
+  height: 70svh;
+  padding: 2rem;
+  background-color: #0f0f0f;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 1000px) {
+  p {
+    font-size: 1.25rem;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .two .container .col:nth-child(2),
+  .three .container .col:nth-child(1) {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  section.four {
+    height: 125svh;
+  }
+
+  .four p {
+    width: 100%;
+  }
 }
