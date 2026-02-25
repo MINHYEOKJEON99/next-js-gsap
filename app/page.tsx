@@ -18,6 +18,19 @@ export default function Home() {
           </Link>
           <span style={{ marginLeft: "0.75rem", color: "#666" }}>— ScrollTrigger - rotate, pin</span>
         </li>
+        <li>
+          <Link
+            href="/step2"
+            style={{
+              fontSize: "1.25rem",
+              color: "#3b82f6",
+              textDecoration: "underline",
+            }}
+          >
+            Step 2
+          </Link>
+          <span style={{ marginLeft: "0.75rem", color: "#666" }}>— Comming Soon</span>
+        </li>
       </ul>
     </div>
   );
