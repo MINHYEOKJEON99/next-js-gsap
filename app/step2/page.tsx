@@ -10,6 +10,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Step2() {
+  // useRef를 적극 이용하는건 jsx요소에 쉽게 접근하게 만들기 위함
   const containerRef = useRef<HTMLDivElement>(null);
   const heroImgRef = useRef<HTMLDivElement>(null);
   const heroImgElementRef = useRef<HTMLImageElement>(null);
@@ -33,29 +34,49 @@ export default function Step2() {
 
       const heroContentHeight = heroContent.offsetHeight;
       const viewportHeight = window.innerHeight;
-      const heroContentMovedistance = heroContentHeight - viewportHeight;
-
       const heroImgHeight = heroImg.offsetHeight;
+
+      // 컨텐츠와 배경이 움직일 거리 계산
+      const heroContentMovedistance = heroContentHeight - viewportHeight;
       const heroImgMovedistance = heroImgHeight - viewportHeight;
 
+      // 기존 이징 프리셋에 의존하는 대신 직접제어,
+      // 이를 통해서 스크롤에 더 자연스러운 느낌을 주고
+      // 대칭적인 이징 곡선을 얻음
+      // 나중에 progress bar와 매핑 해 부드럽게 가감속 될수 있음
       const ease = (x: number): number => x * x * (3 - 2 * x);
 
       ScrollTrigger.create({
         trigger: ".hero",
         start: "top top",
         end: `+=${window.innerHeight * 4}px`,
+        // 영역의 스크롤 지속시간 만큼 간격 추가해 페이지의
+        // 나머지 부분이 갑자기 위로 이동하는것 방지
         pin: true,
         pinSpacing: true,
+        // 애니메이션 시간 x 스크롤 기반
         scrub: 1,
+
+        // onUpdate 콜백은 스크롤 트리거가 활성화 되어있는 동안 지속적으로 실행됨
         onUpdate: (self) => {
           gsap.set(progressBar, {
+            // --progress: 0은 초기값이고, JS가
+            // 스크롤마다 이 값을 덮어쓰는 구조
+            // self.progress는  0 - 1 까지 업데이트 되며 css에 제공
             "--progress": self.progress,
           });
 
+          // 이동될 거리를 0 - 1 까지 음수 곱을 하여 위로 올라가게 만듦
+          // 초기에 top 0부터 밑으로 쭈욱 이어져있으니까
           gsap.set(heroContent, {
             y: -self.progress * heroContentMovedistance,
           });
 
+          // 스크롤의 진행상황이 어느 부분에 있는지에 따라 다르게 맵핑
+          // progress 0 → 0.45    ease 적용하며 0 → 0.65까지 부드럽게 이동
+          // progress 0.45 → 0.75  0.65 고정 (멈춤)
+          // progress 0.75 → 1.0   ease 적용하며
+          // 0.65 → 1.0까지 부드럽게 이동
           let heroImgProgress;
           if (self.progress <= 0.45) {
             heroImgProgress = ease(self.progress / 0.45) * 0.65;
@@ -69,17 +90,18 @@ export default function Step2() {
             y: heroImgProgress * heroImgMovedistance,
           });
 
-          let heroMaskScale;
-          let heroImgSaturation;
-          let heroImgOverlayOpacity;
+          let heroMaskScale; //마스크 크기
+          let heroImgSaturation; //이미지 채도
+          let heroImgOverlayOpacity; // 이미지를 좀 어둡게 만드는 효과
 
           if (self.progress <= 0.4) {
-            heroMaskScale = 2.5;
+            // 초기값
+            heroMaskScale = 3.5;
             heroImgSaturation = 1;
             heroImgOverlayOpacity = 0.35;
           } else if (self.progress <= 0.5) {
             const phaseProgress = ease((self.progress - 0.4) / 0.1);
-            heroMaskScale = 2.5 - phaseProgress * 1.5;
+            heroMaskScale = 3.5 - phaseProgress * 2.5;
             heroImgSaturation = 1 - phaseProgress;
             heroImgOverlayOpacity = 0.35 + phaseProgress * 0.35;
           } else if (self.progress <= 0.75) {
@@ -88,23 +110,28 @@ export default function Step2() {
             heroImgOverlayOpacity = 0.7;
           } else if (self.progress <= 0.85) {
             const phaseProgress = ease((self.progress - 0.75) / 0.1);
-            heroMaskScale = 1 + phaseProgress * 1.5;
+            heroMaskScale = 1 + phaseProgress * 2.5;
             heroImgSaturation = phaseProgress;
             heroImgOverlayOpacity = 0.7 - phaseProgress * 0.35;
           } else {
-            heroMaskScale = 2.5;
+            heroMaskScale = 3.5;
             heroImgSaturation = 1;
             heroImgOverlayOpacity = 0.35;
           }
 
+          // gsap.set은 해당 요소에 애니메이션 스타일을 적용가능
+          // ex) gsap.set(요소, {scale: 변수})
           gsap.set(heroMask, {
             scale: heroMaskScale,
           });
 
           gsap.set(heroImgElement, {
+            // filter는 이미지의 시각효과 적용 saturate는 채도를 결정
             filter: `saturate(${heroImgSaturation})`,
           });
 
+          // 배경이미지의 after속성 전체 꽉채우고 --dark가 적용되어있는 배경
+          // 즉 좀 어둡게 만들어주는 효과
           gsap.set(heroImg, {
             "--overlay-opacity": heroImgOverlayOpacity,
           });
@@ -113,10 +140,12 @@ export default function Step2() {
           if (self.progress <= 0.475) {
             heroGridOpacity = 0;
           } else if (self.progress <= 0.5) {
+            // 0.475 즉 47.5% - 50% 까지 heroGrid를 0 - 1 opacity 스르륵
             heroGridOpacity = ease((self.progress - 0.475) / 0.025);
           } else if (self.progress <= 0.75) {
             heroGridOpacity = 1;
           } else if (self.progress <= 0.775) {
+            // 0.75 - 0.775 즉 75% - 77.5% 까지 1 - 0 opacity
             heroGridOpacity = 1 - ease((self.progress - 0.75) / 0.025);
           } else {
             heroGridOpacity = 0;
@@ -126,11 +155,12 @@ export default function Step2() {
             opacity: heroGridOpacity,
           });
 
+          // 위와 동일 마커 자체의 opacity
           let marker1Opacity;
           if (self.progress <= 0.5) {
             marker1Opacity = 0;
-          } else if (self.progress <= 0.525) {
-            marker1Opacity = ease((self.progress - 0.5) / 0.025);
+          } else if (self.progress <= 0.55) {
+            marker1Opacity = ease((self.progress - 0.5) / 0.05);
           } else if (self.progress <= 0.7) {
             marker1Opacity = 1;
           } else if (self.progress <= 0.75) {
@@ -146,8 +176,8 @@ export default function Step2() {
           let marker2Opacity;
           if (self.progress <= 0.55) {
             marker2Opacity = 0;
-          } else if (self.progress <= 0.575) {
-            marker2Opacity = ease((self.progress - 0.55) / 0.025);
+          } else if (self.progress <= 0.6) {
+            marker2Opacity = ease((self.progress - 0.55) / 0.05);
           } else if (self.progress <= 0.7) {
             marker2Opacity = 1;
           } else if (self.progress <= 0.75) {
