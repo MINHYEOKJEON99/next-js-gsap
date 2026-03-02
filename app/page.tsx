@@ -34,6 +34,21 @@ export default function Home() {
               — ScrollTrigger - Mask Image Zoom, element arrange, tatical scroll
             </span>
           </li>
+          <li>
+            <Link
+              href="/step3"
+              style={{
+                fontSize: "1.25rem",
+                color: "#3b82f6",
+                textDecoration: "underline",
+              }}
+            >
+              Step 3
+            </Link>
+            <span style={{ marginLeft: "0.75rem", color: "#666" }}>
+              — Page Transition - Block Reveal (GSAP + next-transition-router)
+            </span>
+          </li>
         </ul>
       </div>
     </div>
