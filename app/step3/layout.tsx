@@ -7,15 +7,11 @@ export const metadata = {
   description: "Next.js page transition, powered by next-transition-router.",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function Step3Layout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body>
-        <TransitionProvider>
-          <Nav />
-          {children}
-        </TransitionProvider>
-      </body>
-    </html>
+    <TransitionProvider>
+      <Nav />
+      {children}
+    </TransitionProvider>
   );
 }

@@ -49,6 +49,21 @@ export default function Home() {
               — Page Transition - Block Reveal (GSAP + next-transition-router)
             </span>
           </li>
+          <li>
+            <Link
+              href="/step4"
+              style={{
+                fontSize: "1.25rem",
+                color: "#3b82f6",
+                textDecoration: "underline",
+              }}
+            >
+              Step 4
+            </Link>
+            <span style={{ marginLeft: "0.75rem", color: "#666" }}>
+              — Block Level Text Animation (GSAP SplitText + ScrollTrigger)
+            </span>
+          </li>
         </ul>
       </div>
     </div>
