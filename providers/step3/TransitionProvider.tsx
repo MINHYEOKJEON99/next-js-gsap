@@ -80,7 +80,8 @@ export default function TransitionProvider({ children }: Readonly<{ children: Re
           onComplete: next,
         });
         return () => tween.kill();
-      }}>
+      }}
+    >
       {/* 밑레 div 브록은 전환 애니메이션을 위한 블록입니다.
         전환 효과가 재생될 때만 블록을 표시하는 캔버스로 사용 */}
       <div ref={transitionGridRef} className="transition-grid" />
